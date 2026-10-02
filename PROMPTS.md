@@ -94,3 +94,23 @@ This document records the key prompts and technical discussions held with AI too
 * **Context & Decision:** Configured single-command local orchestration via Docker Compose, guaranteeing reproducible execution for evaluators without local runtime dependencies.
 
 ## Phase 4: Documentation & Submission Polish
+
+### 1. IEEE 754 Floating-Point Normalization
+* **Prompt:**  
+  > *"Fix precision issues 0.1 + 0.2 = 0.3"*
+* **Context & Decision:** Applied rounding and normalization logic in both the Go service layer and the React display state to eliminate binary floating-point representation artifacts.
+
+### 2. UI Display Clamping for Repeating Decimals
+* **Prompt:**  
+  > *"Limit repeating decimals like 1/3 to 8 decimal places so the text fits nicely inside the screen."*
+* **Context & Decision:** Formatted display values to clamp periodic decimals to a clean 8–10 decimal limit, preventing overflow on smaller screen sizes.
+
+### 3. Visual Identity & Favicon Generation
+* **Prompt:**  
+  > *"Make a minimalist, modern vector app icon for a browser favicon, featuring a bold, stylized mathematical symbol or calculator glyph. Flat design, clean lines, high contrast, vibrant purple (#6232A6) and accent orange (#F27405), perfectly centered on a solid plain white background. No text, no photorealism, no 3D effects, 2D vector graphic style, sharp edges, 1:1 square ratio."*
+* **Context & Decision:** Created an SVG vector icon matching the application's color theme to replace default framework assets.
+
+### 4. Comprehensive Technical Documentation
+* **Prompt:**  
+  > *"Write a README following these instructions: Project overview and architecture explanation, Prerequisites (Go, Node, Docker versions), How to run locally (with and without Docker), How to execute tests and view coverage reports, Concrete curl examples for every endpoint, and an explicit section on Design Decisions & Trade-offs (explaining dedicated operation endpoints, layered separation, error codes)."*
+* **Context & Decision:** Generated a production-grade README matching all evaluation criteria specified in the technical assessment.
