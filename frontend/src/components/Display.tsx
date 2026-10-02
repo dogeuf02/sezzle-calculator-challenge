@@ -35,13 +35,13 @@ export const Display: React.FC<DisplayProps> = ({
         )}
       </div>
 
-      <div className="calculator-main-display">
+        <div className="calculator-main-display">
         {isLoading ? (
-          <span className="display-loading">Calculating...</span>
+            <span className="display-loading">Calculating...</span>
         ) : (
-          <span className="display-value">{value}</span>
+            <span className="display-value" data-testid="display-value">{value}</span>
         )}
-      </div>
+        </div>
 
       {error && (
         <div className="calculator-error-banner" role="alert">

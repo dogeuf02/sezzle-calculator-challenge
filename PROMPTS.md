@@ -62,3 +62,18 @@ This document records the key prompts and technical discussions held with AI too
 * **Prompt:**  
   > *"Implement a backspace/delete button in the calculator state machine to allow users to edit their input without clearing the entire calculation state"*
 * **Context & Decision:** Added an action handler to slice the current display string, resetting to '0' when empty and preserving previous operand memory if an operation is pending.
+
+### 4. Test Environment Setup
+* **Prompt:**  
+  > *"Configure Vitest and React Testing Library."*
+* **Context & Decision:** Configured Vitest with jsdom in `vite.config.ts` and set up test matchers with `@testing-library/jest-dom` for component testing.
+
+### 5. Component Rendering & Basic Actions
+* **Prompt:**  
+  > *"Test component rendering and basic user actions (entering digits, clicking clear)."*
+* **Context & Decision:** Added unit tests verifying key click interactions, display text updates, and clear button behavior to ensure UI state updates correctly.
+
+### 6. Error Handling Verification
+* **Prompt:**  
+  > *"Test error state rendering when the API returns an error response."*
+* **Context & Decision:** Mocked API failure scenarios (like division by zero) to verify that error messages render in the UI error banner as expected.
