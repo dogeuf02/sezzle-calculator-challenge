@@ -1,0 +1,91 @@
+# ==========================================
+# Operating System & IDE Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.swp
+*.swo
+*~
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
+.env
+.env.*
+!.env.example
+
+# ==========================================
+# Go (Backend)
+# ==========================================
+# Compiled binaries and executables
+backend/bin/
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test artifacts and coverage reports
+coverage.out
+coverage.html
+backend/coverage.out
+backend/coverage.html
+*.test
+
+# Go workspace
+go.work
+
+# ==========================================
+# Node / React + TypeScript (Frontend)
+# ==========================================
+# Dependencies
+node_modules/
+frontend/node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+frontend/dist/
+frontend/dist-ssr/
+frontend/build/
+dist/
+build/
+
+# Vite & TS cache
+.vite/
+frontend/.vite/
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Vitest / Jest coverage
+frontend/coverage/
+
+# ==========================================
+# Docker & Temporary Files
+# ==========================================
+*.tmp
+*.temp
