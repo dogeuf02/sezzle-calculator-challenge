@@ -20,7 +20,7 @@ func TestCalculatorService(t *testing.T) {
 		}{
 			{"positive numbers", 10, 5, 15, nil},
 			{"negative numbers", -10, -5, -15, nil},
-			{"floating point", 0.1, 0.2, 0.30000000000000004, nil},
+			{"floating point", 0.1, 0.2, 0.3, nil},
 			{"overflow check", math.MaxFloat64, math.MaxFloat64, 0, calculator.ErrResultOverflow},
 		}
 

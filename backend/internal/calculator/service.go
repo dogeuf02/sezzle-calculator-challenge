@@ -5,11 +5,13 @@ import (
 	"math"
 )
 
+const precisionFactor = 1e12
+
 var (
-	ErrDivisionByZero      = errors.New("cannot divide by zero")
-	ErrNegativeSquareRoot  = errors.New("cannot calculate square root of a negative number")
-	ErrInvalidExponent     = errors.New("result is not a real number")
-	ErrResultOverflow      = errors.New("calculation resulted in overflow or underflow")
+	ErrDivisionByZero     = errors.New("cannot divide by zero")
+	ErrNegativeSquareRoot = errors.New("cannot calculate square root of a negative number")
+	ErrInvalidExponent    = errors.New("result is not a real number")
+	ErrResultOverflow     = errors.New("calculation resulted in overflow or underflow")
 )
 
 // Calculator defines the contract for all arithmetic operations.
@@ -35,7 +37,7 @@ func (s *service) Add(a, b float64) (float64, error) {
 	if math.IsInf(res, 0) || math.IsNaN(res) {
 		return 0, ErrResultOverflow
 	}
-	return res, nil
+	return roundPrecision(res), nil
 }
 
 func (s *service) Subtract(a, b float64) (float64, error) {
@@ -43,7 +45,7 @@ func (s *service) Subtract(a, b float64) (float64, error) {
 	if math.IsInf(res, 0) || math.IsNaN(res) {
 		return 0, ErrResultOverflow
 	}
-	return res, nil
+	return roundPrecision(res), nil
 }
 
 func (s *service) Multiply(a, b float64) (float64, error) {
@@ -51,7 +53,7 @@ func (s *service) Multiply(a, b float64) (float64, error) {
 	if math.IsInf(res, 0) || math.IsNaN(res) {
 		return 0, ErrResultOverflow
 	}
-	return res, nil
+	return roundPrecision(res), nil
 }
 
 func (s *service) Divide(a, b float64) (float64, error) {
@@ -62,7 +64,7 @@ func (s *service) Divide(a, b float64) (float64, error) {
 	if math.IsInf(res, 0) || math.IsNaN(res) {
 		return 0, ErrResultOverflow
 	}
-	return res, nil
+	return roundPrecision(res), nil
 }
 
 func (s *service) Power(a, b float64) (float64, error) {
@@ -73,7 +75,7 @@ func (s *service) Power(a, b float64) (float64, error) {
 	if math.IsInf(res, 0) {
 		return 0, ErrResultOverflow
 	}
-	return res, nil
+	return roundPrecision(res), nil
 }
 
 func (s *service) Sqrt(a float64) (float64, error) {
@@ -84,7 +86,7 @@ func (s *service) Sqrt(a float64) (float64, error) {
 	if math.IsNaN(res) || math.IsInf(res, 0) {
 		return 0, ErrResultOverflow
 	}
-	return res, nil
+	return roundPrecision(res), nil
 }
 
 func (s *service) Percentage(a, b float64) (float64, error) {
@@ -92,5 +94,13 @@ func (s *service) Percentage(a, b float64) (float64, error) {
 	if math.IsInf(res, 0) || math.IsNaN(res) {
 		return 0, ErrResultOverflow
 	}
-	return res, nil
+	return roundPrecision(res), nil
+}
+
+func roundPrecision(val float64) float64 {
+	if math.IsInf(val, 0) || math.IsNaN(val) {
+		return val
+	}
+	// Round to 12 decimal places to eliminate binary float artifacts (e.g. 0.30000000000000004 -> 0.3)
+	return math.Round(val*precisionFactor) / precisionFactor
 }

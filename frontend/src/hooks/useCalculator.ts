@@ -11,6 +11,11 @@ export interface CalculatorState {
   error: string | null;
 }
 
+const formatResult = (val: number): string => {
+
+  return parseFloat(val.toFixed(10)).toString();
+};
+
 export function useCalculator() {
   const [display, setDisplay] = useState<string>('0');
   const [previousOperand, setPreviousOperand] = useState<number | null>(null);
@@ -27,24 +32,21 @@ export function useCalculator() {
     setError(null);
   };
 
-        const deleteLastDigit = () => {
+  const deleteLastDigit = () => {
     setError(null);
 
-    // Si se acaba de seleccionar un operador, no se borra nada
     if (waitingForSecondOperand) {
-        return;
+      return;
     }
 
     setDisplay((prev) => {
-        // Si ya es un solo dígito o un número negativo de un dígito (ej: "-7")
-        if (prev.length <= 1 || (prev.length === 2 && prev.startsWith('-'))) {
+      if (prev.length <= 1 || (prev.length === 2 && prev.startsWith('-'))) {
         return '0';
-        }
-        return prev.slice(0, -1);
+      }
+      return prev.slice(0, -1);
     });
-    };
+  };
 
-  
   const inputDigit = (digit: string) => {
     setError(null);
     setDisplay((prev) => {
@@ -79,7 +81,7 @@ export function useCalculator() {
 
     try {
       const result = await executeBinaryOperation(operation, previousOperand, currentOperand);
-      setDisplay(String(result));
+      setDisplay(formatResult(result));
       setPreviousOperand(null);
       setOperation(null);
       setWaitingForSecondOperand(true);
@@ -101,7 +103,6 @@ export function useCalculator() {
     if (previousOperand === null) {
       setPreviousOperand(currentValue);
     } else if (operation && !waitingForSecondOperand) {
-      // Se evalúa la operación acumulada si se encadenan operadores
       executeCalculation();
       return;
     }
@@ -117,7 +118,7 @@ export function useCalculator() {
 
     try {
       const result = await executeUnaryOperation('sqrt', operand);
-      setDisplay(String(result));
+      setDisplay(formatResult(result));
       setWaitingForSecondOperand(true);
     } catch (err) {
       if (err instanceof CalculatorApiError) {
