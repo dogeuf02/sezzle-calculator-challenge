@@ -1174,3 +1174,14 @@ Infrastructure
 ```
 
 The repository contains the complete frontend, backend, tests, documentation, architecture diagrams, Docker configuration, and development prompts required for evaluation.
+
+
+---
+
+# Author
+
+**David Stiven Muñoz Amaya**
+
+Developed as part of the **Sezzle Full-Stack Technical Assessment**.
+
+This project demonstrates the implementation of a full-stack calculator using React, TypeScript, and Go, with an emphasis on clean architecture, input validation, testability, and maintainable code.
