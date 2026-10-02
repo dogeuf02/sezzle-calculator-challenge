@@ -1,0 +1,58 @@
+.calculator-keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.btn {
+  border: none;
+  border-radius: 16px;
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: 1.1rem 0;
+  cursor: pointer;
+  color: var(--color-text);
+  transition: transform 0.1s ease, filter 0.2s ease;
+  user-select: none;
+}
+
+.btn:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Números */
+.btn-num {
+  background-color: var(--color-secondary);
+}
+
+/* Operaciones auxiliares (C, √, ^, %) */
+.btn-action {
+  background-color: var(--color-primary);
+  font-size: 1.1rem;
+}
+
+/* Operaciones binarias principales */
+.btn-op {
+  background-color: var(--color-primary);
+  font-size: 1.4rem;
+}
+
+/* Botón Igual */
+.btn-equals {
+  background-color: var(--color-accent);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+.btn-span-4 {
+  grid-column: span 4;
+}

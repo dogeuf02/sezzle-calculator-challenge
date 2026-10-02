@@ -43,3 +43,22 @@ This document records the key prompts and technical discussions held with AI too
 * **Prompt:**  
   > *"Generate table-driven tests in Go covering standard arithmetic operations and edge cases: division by zero, negative square roots, and precision handling for floating points."*
 * **Context & Decision:** Implemented nested table-driven test suites (`TestCalculatorService` and `TestCalculatorHandlers`), verifying business logic, error boundaries, and HTTP response statuses.
+
+---
+
+## Phase 3: Frontend Architecture, State Management & UI
+
+### 1. Calculator State Machine & Async Lifecycle
+* **Prompt:**  
+  > *"Design a robust calculator state machine in React using TypeScript. It must handle current display value, stored previous operands, active pending operations, network loading states, and global error banners (e.g., displaying server-side errors such as 'Cannot divide by zero')."*
+* **Context & Decision:** Created a custom hook / state machine decoupling arithmetic input logic and network synchronization from visual presentation, ensuring graceful degradation during network errors.
+
+### 2. UI/UX Theming & Responsive Layout
+* **Prompt:**  
+  > *"Structure the calculator UI layout using a minimalist, rounded, and responsive container with a clean color palette(#6232A6   #56308C   #482973   #382859   #F27405). Ensure proper contrast, flexbox alignment, and mobile responsiveness."*
+* **Context & Decision:** Implemented a component hierarchy separating the display screen, error indicators, and responsive button grid, applying consistent spacing and border radii using the sezzle color palette.
+
+### 3. Input Manipulation & Backspace Functionality
+* **Prompt:**  
+  > *"Implement a backspace/delete button in the calculator state machine to allow users to edit their input without clearing the entire calculation state"*
+* **Context & Decision:** Added an action handler to slice the current display string, resetting to '0' when empty and preserving previous operand memory if an operation is pending.

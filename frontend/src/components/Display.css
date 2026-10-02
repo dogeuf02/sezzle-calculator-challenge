@@ -1,0 +1,48 @@
+.calculator-display-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: var(--color-bg);
+  border-radius: 20px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+  min-height: 120px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
+  word-break: break-all;
+}
+
+.calculator-equation-preview {
+  font-size: 0.9rem;
+  color: var(--color-text-dim);
+  text-align: right;
+  min-height: 1.2rem;
+}
+
+.calculator-main-display {
+  font-size: 2.2rem;
+  font-weight: 600;
+  text-align: right;
+  letter-spacing: -0.5px;
+}
+
+.display-loading {
+  font-size: 1.2rem;
+  color: var(--color-accent);
+  animation: pulse 1.2s infinite ease-in-out;
+}
+
+.calculator-error-banner {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
+  color: #FFE0B2;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
