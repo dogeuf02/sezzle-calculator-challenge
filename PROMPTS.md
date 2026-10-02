@@ -30,23 +30,19 @@ This document records the key prompts and technical discussions held with AI too
   > *"I want to support Exponentiation, Square Root, and Percentage as well. How should the request/response payloads and edge-case validations (e.g., negative square roots, division by zero) be structured across these endpoints?"*
 * **Context & Decision:** Designed clear DTO contracts distinguishing unary operations (`sqrt`, `percentage`) from binary operations (`power`, `divide`), enforcing explicit edge-case handling at the handler level.
 
----
-
-## Phase 2: Go Idiomatic Structure & Testing Strategy
-
-### 1. Package Layout & Test Colocation
+### 3. Package Layout & Test Colocation
 * **Prompt:**  
   > *"Regarding folder structure in Go: should unit tests be placed in an external /tests directory or alongside the domain packages?"*
 * **Context & Decision:** Kept unit tests (`*_test.go`) directly inside `internal/calculator` adhering to Go conventions, allowing white-box testing of domain logic while preserving package cohesion.
 
-### 2. Test Cases & Coverage Verification
+### 4. Test Cases & Coverage Verification
 * **Prompt:**  
   > *"Generate table-driven tests in Go covering standard arithmetic operations and edge cases: division by zero, negative square roots, and precision handling for floating points."*
 * **Context & Decision:** Implemented nested table-driven test suites (`TestCalculatorService` and `TestCalculatorHandlers`), verifying business logic, error boundaries, and HTTP response statuses.
 
 ---
 
-## Phase 3: Frontend Architecture, State Management & UI
+## Phase 2: Frontend Architecture, State Management & UI
 
 ### 1. Calculator State Machine & Async Lifecycle
 * **Prompt:**  
@@ -77,3 +73,24 @@ This document records the key prompts and technical discussions held with AI too
 * **Prompt:**  
   > *"Test error state rendering when the API returns an error response."*
 * **Context & Decision:** Mocked API failure scenarios (like division by zero) to verify that error messages render in the UI error banner as expected.
+
+---
+
+## Phase 3: Containerization & Multi-Service Orchestration
+
+### 1. Backend Multi-Stage Dockerfile
+* **Prompt:**  
+  > *"Write a multi-stage Dockerfile for the Go backend"*
+* **Context & Decision:** Created an optimized, lightweight Docker container separating the build toolchain from the runtime image, drastically reducing the attack surface and overall image size.
+
+### 2. Frontend Multi-Stage Dockerfile with Nginx
+* **Prompt:**  
+  > *"Write a multi-stage Dockerfile for the React frontend"*
+* **Context & Decision:** Packaged the compiled Vite distribution into a lightweight Nginx web server, ensuring fast static file serving and consistent HTTP headers.
+
+### 3. Orchestration & Cold-Boot Verification
+* **Prompt:**  
+  > *"Write a root docker-compose.yml to orchestrate the Go backend and React frontend with port mappings (8080:8080 and 3000:80)."*
+* **Context & Decision:** Configured single-command local orchestration via Docker Compose, guaranteeing reproducible execution for evaluators without local runtime dependencies.
+
+## Phase 4: Documentation & Submission Polish
