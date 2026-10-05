@@ -25,13 +25,13 @@ The frontend is responsible for the user interface and interaction, while the Go
 
 ### Component Diagram
 
-![Component Diagram](./docs/diagrams/components.png)
+![Component Diagram](./docs/Diagrams/Components.png)
 
 The component diagram illustrates the main frontend and backend components and their responsibilities.
 
 ### Sequence Diagram
 
-![Sequence Diagram](./docs/diagrams/sequence.png)
+![Sequence Diagram](./docs/Diagrams/Sequence.png)
 
 The sequence diagram illustrates the flow of a calculator operation from the user's interaction with the frontend through the REST API and calculator service, and finally back to the UI.
 
@@ -41,7 +41,7 @@ The sequence diagram illustrates the flow of a calculator operation from the use
 
 ### Color Palette
 
-![Color Palette](./docs/assets/colorPalette.png)
+![Color Palette](./docs/assets/ColorPalette.png)
 
 The color palette defines the visual language used throughout the calculator interface.
 
@@ -118,6 +118,19 @@ The calculator supports the required arithmetic operations from the assessment a
 - Health-check endpoint
 - Layered backend architecture
 
+### Advanced Frontend & UX Features
+
+- **`useReducer` State Machine:** Deterministic client-side state machine architecture (`CalculatorState`, action union) eliminating race conditions, stale closures, and inconsistent intermediate states.
+- **Contextual Percentage (`%`) Handling:**
+  - *Additive / Subtractive:* Relative percentage calculation for discounts and markups (`100 + 20%` → `120`, `80 - 30%` → `56`).
+  - *Multiplicative / Divisive:* Converts percentage into an inline decimal factor (`100 × 50%` → `100 × 0.5 = 50`).
+  - *Standalone:* Directly evaluates as a standard binary percentage calculation via backend API.
+- **Consecutive Operator Chaining:** Seamless multi-step evaluation (`10 + 5 × 2 = 30`) computing intermediate results automatically on subsequent operator presses.
+- **Display Overflow Protection & Auto-Formatting:**
+  - Scientific exponential notation for very large ($\ge 10^{11}$) and very small ($< 10^{-6}$) values to prevent layout overflow.
+  - Floating-point normalization up to 12 decimal places while preserving in-progress decimal typing (`"12."`).
+- **Responsive Display Scaling:** Dynamic text scaling using CSS `clamp()` and media queries ensuring readability across mobile, tablet, and desktop viewports.
+
 ---
 
 # Technology Stack
@@ -179,22 +192,28 @@ No database is required because the calculator service is stateless.
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
+│   │   │   ├── Calculator.tsx
+│   │   │   ├── Display.tsx
+│   │   │   └── Keypad.tsx
+│   │   ├── hooks/
+│   │   │   └── useCalculator.ts
 │   │   ├── services/
-│   │   ├── ...
-│   │   └── ...
-│   │
+│   │   │   ├── calculatorApi.ts
+│   │   │   └── types.ts
+│   │   └── utils/
+│   │       └── formatDisplayValue.ts
 │   ├── package.json
 │   └── ...
 │
 ├── docs/
 │   ├── assets/
-│   │   └── colorPalette.png
+│   │   └── ColorPalette.png
 │   │
 │   └── Diagrams/
-│       ├── components.png
-│       └── sequence.png
+│       ├── Components.png
+│       └── Sequence.png
 │
-├── prompt.md
+├── PROMPTS.md
 ├── docker-compose.yml
 └── README.md
 ```
@@ -860,6 +879,40 @@ Persistent calculation history is outside the scope of the assessment.
 
 ---
 
+## 9. `useReducer` Deterministic State Machine
+
+The client state was migrated from multiple individual `useState` hooks to a centralized `useReducer` state machine (`CalculatorState`, action union).
+
+This guarantees:
+- **Atomic state transitions:** Operands, active operators, and transition flags (`waitingForSecondOperand`) update simultaneously in single, pure dispatches.
+- **Elimination of stale closures & race conditions:** Rapid user inputs or asynchronous calculation callbacks operate over guaranteed fresh, deterministic state without intermediate inconsistencies.
+- **Isolation and testability:** Hook logic and state transitions can be thoroughly tested deterministically.
+
+---
+
+## 10. Context-Aware Percentage Logic
+
+The percentage operator (`%`) evaluates based on the mathematical context of the current operation:
+
+| Context | Expression | Evaluated As | Result |
+|---|---|---|---|
+| Addition (Tax / Markup) | `100 + 20%` | `100 + (100 × 20 / 100)` | `120` |
+| Subtraction (Discount) | `80 − 30%` | `80 − (80 × 30 / 100)` | `56` |
+| Multiplication / Division | `100 × 50%` | `100 × 0.5` | `50` |
+| Standalone | `200 % 15` | `(200 × 15) / 100` | `30` |
+
+---
+
+## 11. Display Overflow & Scientific Formatting
+
+To prevent numeric values from breaking out of the container or displaying raw IEEE 754 precision artifacts:
+- Numbers exceeding $10^{11}$ or smaller than $10^{-6}$ are automatically formatted into concise scientific exponential notation (e.g., `1.2346e+11`).
+- Decimal places are bounded to 12 significant digits.
+- In-progress user input (such as typing `"12."`) remains uncorrupted during typing.
+- Fluid typography via `clamp(1.4rem, 4vw, 2.1rem)` and ellipsis clipping ensure complete responsiveness across mobile and desktop devices.
+
+---
+
 # Testing
 
 Testing is implemented at both the backend and frontend levels.
@@ -953,7 +1006,7 @@ From the frontend directory:
 
 ```bash
 cd frontend
-npm test -- --coverage
+npm run test:coverage
 ```
 
 The generated report provides visibility into tested frontend code paths.
@@ -1058,7 +1111,7 @@ AI-generated suggestions were reviewed and adapted to the project's requirements
 
 The prompts used throughout the development process are documented separately in:
 
-**[prompt.md](./prompt.md)**
+**[PROMPTS.md](./PROMPTS.md)**
 
 The prompt file contains the development prompts used for architecture, implementation, testing, debugging, and documentation.
 
