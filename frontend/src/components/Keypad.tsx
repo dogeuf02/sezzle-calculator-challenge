@@ -8,7 +8,7 @@ interface KeypadProps {
   onBinaryOperation: (op: BinaryOperation) => void;
   onSqrt: () => void;
   onClear: () => void;
-  onDelete: () => void; // <--- Add this prop
+  onDelete: () => void;
   onCalculate: () => void;
   disabled: boolean;
 }
@@ -19,7 +19,7 @@ export const Keypad: React.FC<KeypadProps> = ({
   onBinaryOperation,
   onSqrt,
   onClear,
-  onDelete, // <--- Destructure here
+  onDelete,
   onCalculate,
   disabled,
 }) => {

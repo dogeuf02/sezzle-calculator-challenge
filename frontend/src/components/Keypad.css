@@ -29,24 +29,24 @@
   cursor: not-allowed;
 }
 
-/* Números */
+/* Numbers */
 .btn-num {
   background-color: var(--color-secondary);
 }
 
-/* Operaciones auxiliares (C, √, ^, %) */
+/* Operations (C, √, ^, %) */
 .btn-action {
   background-color: var(--color-primary);
   font-size: 1.1rem;
 }
 
-/* Operaciones binarias principales */
+/* Binary Operations */
 .btn-op {
   background-color: var(--color-primary);
   font-size: 1.4rem;
 }
 
-/* Botón Igual */
+/* Equals Button */
 .btn-equals {
   background-color: var(--color-accent);
   color: #FFFFFF;
