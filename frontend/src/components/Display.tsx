@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatDisplayValue } from '../utils/formatDisplayValue';
 import './Display.css';
 
 interface DisplayProps {
@@ -39,7 +40,7 @@ export const Display: React.FC<DisplayProps> = ({
         {isLoading ? (
             <span className="display-loading">Calculating...</span>
         ) : (
-            <span className="display-value" data-testid="display-value">{value}</span>
+            <span className="display-value" data-testid="display-value">{formatDisplayValue(value)}</span>
         )}
         </div>
 
